@@ -1,0 +1,160 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "libpqxx-build",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-libpqxx-build-Debug-fbf273ec4fcda92ee097.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "D:/1/libpqxx-7.9.0"
+				},
+				{
+					"build" : "libpqxx-build/src",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-libpqxx-build.src-Debug-4fd784c37827bd53beec.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "D:/1/libpqxx-7.9.0/src",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "libpqxx-build/include",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-libpqxx-build.include-Debug-55900baf249091245ec8.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "D:/1/libpqxx-7.9.0/include"
+				},
+				{
+					"build" : "libpqxx-build/test",
+					"jsonFile" : "directory-libpqxx-build.test-Debug-0906cb2e6ec40f25310b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "D:/1/libpqxx-7.9.0/test",
+					"targetIndexes" : 
+					[
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "MyProject1",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					],
+					"name" : "libpqxx",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "MyProject1::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MyProject1-Debug-fe97e17041aa01429178.json",
+					"name" : "MyProject1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "pqxx::@376b7f7a0e6c7533911c",
+					"jsonFile" : "target-pqxx-Debug-f450298a8e21958725a5.json",
+					"name" : "pqxx",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "runner::@8e15c2587bdae1d5f14a",
+					"jsonFile" : "target-runner-Debug-09957f755640225add08.json",
+					"name" : "runner",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/1/Homework/Lesson 21/out/build/x64-Debug",
+		"source" : "D:/1/Homework/Lesson 21"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}
