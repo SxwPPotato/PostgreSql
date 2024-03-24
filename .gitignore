@@ -451,3 +451,7 @@ include/*
 lib/*
 bin/*
 test/test_runner
+
+out/*
+*/.ninja_deps
+*/.ninja_log

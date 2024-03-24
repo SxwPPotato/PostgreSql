@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-set(PosrtgreSQL_ADDITIONAL_VERSIONS "16")
+set(PostgreSQL_ADDITIONAL_VERSIONS "16")
 
 project(MyProject1)
 

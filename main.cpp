@@ -18,13 +18,26 @@ public:
 		Client_id serial PRIMARY key,                                      \
 		Name text NOT NULL,                                                \
 		Surname text NOT NULL,                                             \
-		Email text NOT NULL,                                               \
-		Telephone BIGINT                                                  \
+		Email text NOT NULL                                                \
 	    );";
 
 		tx.exec(query);
 
 		tx.commit();
+	}
+
+	void createtablephone(pqxx::connection& conn) {
+		pqxx::transaction tx(conn);
+
+		static const char* query = "CREATE TABLE if not exists phoneclient(     \
+        Client_id INTEGER NOT NULL REFERENCES client(Client_id),                \
+        Telephone BIGINT                                                        \
+	    );";
+
+		tx.exec(query);
+
+		tx.commit();
+
 	}
 
 	void newclient(pqxx::connection& conn, std::string name, std::string surname, std::string email) {
@@ -34,10 +47,11 @@ public:
 		tx.commit();
 	}
 
-	void telephone(pqxx::connection& conn, std::string name, long long telephone) {
+	void telephone(pqxx::connection& conn, int id, long long telephone) {
 		pqxx::work tx{ conn };
-		tx.exec("Update client SET Telephone = " + tx.esc(std::to_string(telephone)) + " "
-			"WHERE Name = '" + tx.esc(name) + "'");
+		tx.exec(" INSERT INTO phoneclient (client_id, telephone)" 
+			"VALUES( " + tx.esc(std::to_string(id)) + ", " + tx.esc(std::to_string(telephone)) + "  )");
+			
 		tx.commit();
 	}
 
@@ -48,24 +62,26 @@ public:
 		tx.commit();
 	}
 
-	void deletetelephone(pqxx::connection& conn, std::string name) {
+	void deletetelephone(pqxx::connection& conn, int id) {
 		pqxx::work tx{ conn };
-		tx.exec(" Update client SET Telephone  = " + tx.esc(std::to_string(0)) + " "
-			"WHERE Name = '" + tx.esc(name) + "'");
+		tx.exec(" Update phoneclient SET Telephone  = " + tx.esc(std::to_string(0)) + " "
+			"WHERE client_id = '" + tx.esc(std::to_string(id)) + "'");
 		tx.commit();
 	}
 
-	void deleteclient(pqxx::connection& conn, std::string name) {
+	void deleteclient(pqxx::connection& conn, int id) {
 		pqxx::work tx{ conn };
-		tx.exec(" DELETE From client "
-			"WHERE Name = '" + tx.esc(name) + "'");
+		tx.exec(" DELETE From phoneclient "
+			"WHERE client_id = " + tx.esc(std::to_string(id)) + "");
+		tx.exec("DELETE From client "
+			"WHERE client_id = " + tx.esc(std::to_string(id)) + "");
 		tx.commit();
 	}
 	
 	void selectclient(pqxx::connection& conn, std::string name) {
 		pqxx::work tx{ conn };
 
-		auto collection = tx.query<std::string, std::string, std::string, long long>("Select Name, Surname, Email, Telephone From client "
+		auto collection = tx.query<std::string, std::string, std::string, long long>("Select Name, Surname, Email, Telephone From client c join phoneclient pc on c.client_id = pc.client_id "
 			"WHERE Name = '" + tx.esc(name) + "' OR Surname = '" + tx.esc(name) + "' OR Email = '" + tx.esc(name) + "' ");
 
 		
@@ -84,7 +100,7 @@ public:
 	void selectclient(pqxx::connection& conn, long long tel) {
 		pqxx::work tx{ conn };
 
-		auto collection = tx.query<std::string, std::string, std::string, long long>("Select Name, Surname, Email, Telephone From client "
+		auto collection = tx.query<std::string, std::string, std::string, long long>("Select Name, Surname, Email, Telephone From client c join phoneclient pc on c.client_id = pc.client_id "
 			"WHERE Telephone = " + tx.esc(std::to_string(tel)) + " ");
 
 
@@ -119,17 +135,21 @@ int main(){
 			"user=postgres "
 			"password=0406Dbnfkz2005 ");
 
-
+		std::cout << "âààâ";
 		Tablework table;
 		table.createtable(conn);
 
 		std::cout << "Table created" << std::endl;
 
-		table.newclient(conn, "Vitaliy", "Jorikov", "vitaliy@gmail.com");
+		table.createtablephone(conn);
+
+		std::cout << "TablePhone created" << std::endl;
+
+		table.newclient(conn, "Vitaliy", "ËÎðíîâ", "vitaliy@gmail.com");
 		
 		std::cout << "New client created" << std::endl;
 
-		table.telephone(conn, "Vitaliy", 79387286482);
+		table.telephone(conn, 1, 79387286482);
 
 		std::cout << "Telephone created" << std::endl;
 
@@ -137,15 +157,15 @@ int main(){
 		
 		std::cout << "Update client" << std::endl;
 
-		table.selectclient(conn, "Michael");
+		table.selectclient(conn, 79387286482);
 
 		std::cout << "Client select" << std::endl;
 
-		table.deletetelephone(conn, "Michael");
+		table.deletetelephone(conn, 1);
 
 		std::cout << "Telephone deleted" << std::endl;
 
-		table.deleteclient(conn, "Michael");
+		table.deleteclient(conn, 1);
 
 		std::cout << "Client deleted" << std::endl;
 	}
